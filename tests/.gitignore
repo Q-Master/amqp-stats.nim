@@ -1,0 +1,5 @@
+*.json
+*
+!.gitignore
+!*.nims
+!*.nim
