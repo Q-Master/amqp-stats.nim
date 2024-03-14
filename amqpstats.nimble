@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.1.1"
+version       = "0.1.2"
 author        = "Vladimir Berezenko"
 description   = "Pure Nim library to read AMQP stats via management plugin API"
 license       = "MIT"
