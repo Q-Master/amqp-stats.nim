@@ -69,6 +69,8 @@ proc clusterName*(self: AMQPStats | AMQPStatsAsync): Future[string] {.multisync.
   let js = await self.call("cluster-name")
   result = js["name"].str
 
+# Nodes
+
 proc nodes*(self: AMQPStats | AMQPStatsAsync): Future[seq[Node]] {.multisync.} =
   ## Retrieves a list of nodes in the RabbitMQ cluster.
   let js = await self.callString("nodes")
