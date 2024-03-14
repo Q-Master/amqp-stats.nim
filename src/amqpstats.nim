@@ -1,7 +1,4 @@
 import std/[httpclient, asyncdispatch, json, uri, base64, strutils]
-#import pkg/packets/packets
-#import pkg/packets/json/serialization
-
 import amqpstats/types
 export packets, serialization
 

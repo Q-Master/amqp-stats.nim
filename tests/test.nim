@@ -1,5 +1,7 @@
 import std/[unittest, json]
+import pkg/packets/json/serialization
 import amqpstats
+
 
 const HOST = "http://localhost:15672"
 const USER = "guest"
