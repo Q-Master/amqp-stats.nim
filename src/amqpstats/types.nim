@@ -8,32 +8,32 @@ packet Rate:
   var rate*: float
 
 packet MessageStats:
-  var ack*: int
-  var ackDetails* {.asName: "ack_details".}: Rate
+  var ack*: Option[int]
+  var ackDetails* {.asName: "ack_details".}: Option[Rate]
   var confirm*: Option[int]
   var confirmDetails* {.asName: "confirm_details".}: Option[Rate]
-  var deliver*: int
-  var deliverDetails* {.asName: "deliver_details".}: Rate
-  var deliverGet* {.asName: "deliver_get".}: int
-  var deliverGetDetails* {.asName: "deliver_get_details".}: Rate
-  var deliverNoAck* {.asName: "deliver_no_ack".}: int
-  var deliverNoAckDetails* {.asName: "deliver_no_ack_details".}: Rate
+  var deliver*: Option[int]
+  var deliverDetails* {.asName: "deliver_details".}: Option[Rate]
+  var deliverGet* {.asName: "deliver_get".}: Option[int]
+  var deliverGetDetails* {.asName: "deliver_get_details".}: Option[Rate]
+  var deliverNoAck* {.asName: "deliver_no_ack".}: Option[int]
+  var deliverNoAckDetails* {.asName: "deliver_no_ack_details".}: Option[Rate]
   var diskReads* {.asName: "disk_reads".}: Option[int]
   var diskReadsDetails* {.asName: "disk_reads_details".}: Option[Rate]
   var diskWrites* {.asName: "disk_writes".}: Option[int]
   var diskWritesDetails* {.asName: "disk_writes_details".}: Option[Rate]
   var dropUnroutable* {.asName: "drop_unroutable".}: Option[int]
   var dropUnroutableDetails* {.asName: "drop_unroutable_details".}: Option[Rate]
-  var get*: int
-  var getDetails* {.asName: "get_details".}: Rate
-  var getEmpty* {.asName: "get_empty".}: int
-  var getEmptyDetails* {.asName: "get_empty_details".}: Rate
-  var getNoAck* {.asName: "get_no_ack".}: int
-  var getNoAckDetails* {.asName: "get_no_ack_details".}: Rate
+  var get*: Option[int]
+  var getDetails* {.asName: "get_details".}: Option[Rate]
+  var getEmpty* {.asName: "get_empty".}: Option[int]
+  var getEmptyDetails* {.asName: "get_empty_details".}: Option[Rate]
+  var getNoAck* {.asName: "get_no_ack".}: Option[int]
+  var getNoAckDetails* {.asName: "get_no_ack_details".}: Option[Rate]
   var publish*: Option[int]
   var publishDetails* {.asName: "publish_details".}: Option[Rate]
-  var redeliver*: int
-  var redeliverDetails* {.asName: "redeliver_details".}: Rate
+  var redeliver*: Option[int]
+  var redeliverDetails* {.asName: "redeliver_details".}: Option[Rate]
   var returnUnroutable* {.asName: "return_unroutable".}: Option[int]
   var returnUnroutableDetails* {.asName: "return_unroutable_details".}: Option[Rate]
   var publishIn* {.asName: "publish_in".}: Option[int]
