@@ -2,8 +2,6 @@ import std/[tables, options]
 import packets/packets
 import packets/json/serialization
 
-export packets, serialization
-
 packet Rate:
   var rate*: float
 
