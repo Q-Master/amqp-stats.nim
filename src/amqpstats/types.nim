@@ -410,31 +410,10 @@ packet Consumer:
 
 # Queue
 
-packet QueueBackingStatus:
-  var avgAckEgressRate* {.asName: "avg_ack_egress_rate".}: float
-  var avgAckIngressRate* {.asName: "avg_ack_ingress_rate".}: float
-  var avgEgressRate* {.asName: "avg_egress_rate".}: float
-  var avgIngressRate* {.asName: "avg_ingress_rate".}: float
-  #var delta*: seq
-  var len*: int
-  var mode*: string
-  var nextDeliverSeqId* {.asName: "next_deliver_seq_id".}: int
-  var nextSeqId* {.asName: "next_seq_id".}: int
-  var numPendingAcks* {.asName: "num_pending_acks".}: int
-  var numUnconfirmed* {.asName: "num_unconfirmed".}: int
-  var q1*: int
-  var q2*: int
-  var q3*: int
-  var q4*: int
-  var qsBufferSize* {.asName: "qs_buffer_size".}: int
-  var targetRamCount* {.asName: "target_ram_count".}: string
-  var version*: int
-
 packet Queue of QueueBase:
   var node*: string
   var queueType* {.asName: "type".}: string
   var exclusive*: bool
-  var backingQueueStatus* {.asName: "backing_queue_status".}: Option[QueueBackingStatus]
   var consumerCapacity* {.asName: "consumer_capacity".}: Option[float]
   var consumerUtilisation* {.asName: "consumer_utilisation".}: Option[float]
   var consumers*: Option[int]
@@ -465,10 +444,6 @@ packet Queue of QueueBase:
   var singleActiveConsumerTag* {.asName: "single_active_consumer_tag".}: Option[string]
   var state*: Option[string]
   var idleSince* {.asName: "idle_since".}: Option[string]
-  #var effectivePolicyDefinition* {.asName: "effective_policy_definition".}: None
-  #var operatorPolicy* {.asName: "operator_policy".}: None
-  #var policy*: None
-  #var recoverableSlaves* {.asName: "recoverable_slaves".}: None
 
 # VHosts
 
