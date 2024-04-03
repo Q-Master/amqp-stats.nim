@@ -82,17 +82,19 @@ proc nodes*(self: AMQPStats | AMQPStatsAsync): Future[seq[Node]] {.multisync.} =
 
 iterator nodesIt*(self: AMQPStats): Node =
   var stream = self.callStream("nodes")
-  defer:
+  try:
+    for node in seq[Node].items(stream):
+      yield node
+  finally:
     stream.close()
-  for node in seq[Node].items(stream):
-    yield node
 
 iterator nodesIt*(self: AMQPStatsAsync): Node =
   var stream = waitFor(self.callStream("nodes"))
-  defer:
+  try:
+    for node in seq[Node].items(stream):
+      yield node
+  finally:
     stream.close()
-  for node in seq[Node].items(stream):
-    yield node
 
 proc getNode*(self: AMQPStats | AMQPStatsAsync, name: string): Future[Node] {.multisync.} =
   ## Retrieves an individual node in the RabbitMQ cluster. 
@@ -127,17 +129,19 @@ proc connections*(self: AMQPStats | AMQPStatsAsync): Future[seq[Connection]] {.m
 
 iterator connectionsIt*(self: AMQPStats): Connection =
   var stream = self.callStream("connections")
-  defer:
+  try:
+    for conn in seq[Connection].items(stream):
+      yield conn
+  finally:
     stream.close()
-  for conn in seq[Connection].items(stream):
-    yield conn
 
 iterator connectionsIt*(self: AMQPStatsAsync): Connection =
   var stream = waitFor(self.callStream("connections"))
-  defer:
+  try:
+    for conn in seq[Connection].items(stream):
+      yield conn
+  finally:
     stream.close()
-  for conn in seq[Connection].items(stream):
-    yield conn
 
 proc connection*(self: AMQPStats | AMQPStatsAsync, name: string): Future[Connection] {.multisync.} =
   ## Retrieves an individual connection.
@@ -162,17 +166,19 @@ proc channels*(self: AMQPStats | AMQPStatsAsync): Future[seq[RMQChannel]] {.mult
 
 iterator channelsIt*(self: AMQPStats): RMQChannel =
   var stream = self.callStream("channels")
-  defer:
+  try:
+    for chann in seq[RMQChannel].items(stream):
+      yield chann
+  finally:
     stream.close()
-  for chann in seq[RMQChannel].items(stream):
-    yield chann
 
 iterator channelsIt*(self: AMQPStatsAsync): RMQChannel =
   var stream = waitFor(self.callStream("channels"))
-  defer:
+  try:
+    for chann in seq[RMQChannel].items(stream):
+      yield chann
+  finally:
     stream.close()
-  for chann in seq[RMQChannel].items(stream):
-    yield chann
 
 proc channel*(self: AMQPStats | AMQPStatsAsync, name: string): Future[RMQChannel] {.multisync.} =
   ## Retrieves details about an individual channel.
@@ -188,17 +194,19 @@ proc consumers*(self: AMQPStats | AMQPStatsAsync): Future[seq[Consumer]] {.multi
 
 iterator consumersIt*(self: AMQPStats): Consumer =
   var stream = self.callStream("consumers")
-  defer:
+  try:
+    for cons in seq[Consumer].items(stream):
+      yield cons
+  finally:
     stream.close()
-  for cons in seq[Consumer].items(stream):
-    yield cons
 
 iterator consumersIt*(self: AMQPStatsAsync): Consumer =
   var stream = waitFor(self.callStream("consumers"))
-  defer:
+  try:
+    for cons in seq[Consumer].items(stream):
+      yield cons
+  finally:
     stream.close()
-  for cons in seq[Consumer].items(stream):
-    yield cons
 
 proc consumers*(self: AMQPStats | AMQPStatsAsync, vhost: string): Future[seq[Consumer]] {.multisync.} =
   ## Retrieves a list of all open connections in a specific virtual host.
@@ -207,17 +215,19 @@ proc consumers*(self: AMQPStats | AMQPStatsAsync, vhost: string): Future[seq[Con
 
 iterator consumersIt*(self: AMQPStats, vhost: string): Consumer =
   var stream = self.callStream("consumers/" & encodeUrl(vhost))
-  defer:
+  try:
+    for cons in seq[Consumer].items(stream):
+      yield cons
+  finally:
     stream.close()
-  for cons in seq[Consumer].items(stream):
-    yield cons
 
 iterator consumersIt*(self: AMQPStatsAsync, vhost: string): Consumer =
   var stream = waitFor(self.callStream("consumers/" & encodeUrl(vhost)))
-  defer:
+  try:
+    for cons in seq[Consumer].items(stream):
+      yield cons
+  finally:
     stream.close()
-  for cons in seq[Consumer].items(stream):
-    yield cons
 
 
 # Exchanges
@@ -229,17 +239,19 @@ proc exchanges*(self: AMQPStats | AMQPStatsAsync): Future[seq[Exchange]] {.multi
 
 iterator exchangesIt*(self: AMQPStats): Exchange =
   var stream = self.callStream("exchanges")
-  defer:
+  try:
+    for exch in seq[Exchange].items(stream):
+      yield exch
+  finally:
     stream.close()
-  for exch in seq[Exchange].items(stream):
-    yield exch
 
 iterator exchangesIt*(self: AMQPStatsAsync): Exchange =
   var stream = waitFor(self.callStream("exchanges"))
-  defer:
+  try:
+    for exch in seq[Exchange].items(stream):
+      yield exch
+  finally:
     stream.close()
-  for exch in seq[Exchange].items(stream):
-    yield exch
 
 proc exchanges*(self: AMQPStats | AMQPStatsAsync, vhost: string): Future[seq[Exchange]] {.multisync.} =
   ## Retrieves a list of all exchanges in a given virtual host.
@@ -248,17 +260,19 @@ proc exchanges*(self: AMQPStats | AMQPStatsAsync, vhost: string): Future[seq[Exc
 
 iterator exchangesIt*(self: AMQPStats, vhost: string): Exchange =
   var stream = self.callStream("exchanges/" & encodeUrl(vhost))
-  defer:
+  try:
+    for exch in seq[Exchange].items(stream):
+      yield exch
+  finally:
     stream.close()
-  for exch in seq[Exchange].items(stream):
-    yield exch
 
 iterator exchangesIt*(self: AMQPStatsAsync, vhost: string): Exchange =
   var stream = waitFor(self.callStream("exchanges/" & encodeUrl(vhost)))
-  defer:
+  try:
+    for exch in seq[Exchange].items(stream):
+      yield exch
+  finally:
     stream.close()
-  for exch in seq[Exchange].items(stream):
-    yield exch
 
 proc exchange*(self: AMQPStats | AMQPStatsAsync, vhost, name: string): Future[Exchange] {.multisync.} =
   ## Retrieves details about an individual exchange.
@@ -282,17 +296,19 @@ proc queues*(self: AMQPStats | AMQPStatsAsync): Future[seq[Queue]] {.multisync.}
 
 iterator queuesIt*(self: AMQPStats): Queue =
   var stream = self.callStream("queues")
-  defer:
+  try:
+    for queue in seq[Queue].items(stream):
+      yield queue
+  finally:
     stream.close()
-  for queue in seq[Queue].items(stream):
-    yield queue
 
 iterator queuesIt*(self: AMQPStatsAsync): Queue =
   var stream = waitFor(self.callStream("queues"))
-  defer:
+  try:
+    for queue in seq[Queue].items(stream):
+      yield queue
+  finally:
     stream.close()
-  for queue in seq[Queue].items(stream):
-    yield queue
 
 proc queues*(self: AMQPStats | AMQPStatsAsync, vhost: string): Future[seq[Queue]] {.multisync.} =
   ## Retrieves a list of all queues in a given virtual host.
@@ -301,17 +317,19 @@ proc queues*(self: AMQPStats | AMQPStatsAsync, vhost: string): Future[seq[Queue]
 
 iterator queuesIt*(self: AMQPStats, vhost: string): Queue =
   var stream = self.callStream("queues/" & encodeUrl(vhost))
-  defer:
+  try:
+    for queue in seq[Queue].items(stream):
+      yield queue
+  finally:
     stream.close()
-  for queue in seq[Queue].items(stream):
-    yield queue
 
 iterator queuesIt*(self: AMQPStatsAsync, vhost: string): Queue =
   var stream = waitFor(self.callStream("queues/" & encodeUrl(vhost)))
-  defer:
+  try:
+    for queue in seq[Queue].items(stream):
+      yield queue
+  finally:
     stream.close()
-  for queue in seq[Queue].items(stream):
-    yield queue
 
 proc queue*(self: AMQPStats | AMQPStatsAsync, vhost, name: string): Future[Queue] {.multisync.} =
   ## Retrieves details about an individual queue.
@@ -332,17 +350,19 @@ proc bindings*(self: AMQPStats | AMQPStatsAsync): Future[seq[Binding]] {.multisy
 
 iterator bindingsIt*(self: AMQPStats): Binding =
   var stream = self.callStream("bindings")
-  defer:
+  try:
+    for bindng in seq[Binding].items(stream):
+      yield bindng
+  finally:
     stream.close()
-  for bindng in seq[Binding].items(stream):
-    yield bindng
 
 iterator bindingsIt*(self: AMQPStatsAsync): Binding =
   var stream = waitFor(self.callStream("bindings"))
-  defer:
+  try:
+    for bindng in seq[Binding].items(stream):
+      yield bindng
+  finally:
     stream.close()
-  for bindng in seq[Binding].items(stream):
-    yield bindng
 
 proc bindings*(self: AMQPStats | AMQPStatsAsync, vhost: string): Future[seq[Binding]] {.multisync.} =
   ## Retrieves a list of all bindings in a given virtual host.
@@ -351,17 +371,19 @@ proc bindings*(self: AMQPStats | AMQPStatsAsync, vhost: string): Future[seq[Bind
 
 iterator bindingsIt*(self: AMQPStats, vhost: string): Binding =
   var stream = self.callStream("bindings/" & encodeUrl(vhost))
-  defer:
+  try:
+    for bindng in seq[Binding].items(stream):
+      yield bindng
+  finally:
     stream.close()
-  for bindng in seq[Binding].items(stream):
-    yield bindng
 
 iterator bindingsIt*(self: AMQPStatsAsync, vhost: string): Binding =
   var stream = waitFor(self.callStream("bindings/" & encodeUrl(vhost)))
-  defer:
+  try:
+    for bindng in seq[Binding].items(stream):
+      yield bindng
+  finally:
     stream.close()
-  for bindng in seq[Binding].items(stream):
-    yield bindng
 
 proc bindingsForExchangeQueue*(self: AMQPStats | AMQPStatsAsync, vhost, exchange, queue: string): Future[seq[Binding]] {.multisync.} =
   ## Retrieves a list of all bindings on a given queue.
@@ -417,17 +439,19 @@ proc vhosts*(self: AMQPStats | AMQPStatsAsync): Future[seq[VHost]] {.multisync.}
 
 iterator vhostsIt*(self: AMQPStats): VHost =
   var stream = self.callStream("vhosts")
-  defer:
+  try:
+    for vh in seq[VHost].items(stream):
+      yield vh
+  finally:
     stream.close()
-  for vh in seq[VHost].items(stream):
-    yield vh
 
 iterator vhostsIt*(self: AMQPStatsAsync): VHost =
   var stream = waitFor(self.callStream("vhosts"))
-  defer:
+  try:
+    for vh in seq[VHost].items(stream):
+      yield vh
+  finally:
     stream.close()
-  for vh in seq[VHost].items(stream):
-    yield vh
 
 proc vhost*(self: AMQPStats | AMQPStatsAsync, name: string): Future[VHost] {.multisync.} =
   ## Retrieves details about an individual vhost.
@@ -459,17 +483,19 @@ proc users*(self: AMQPStats | AMQPStatsAsync): Future[seq[User]] {.multisync.} =
 
 iterator usersIt*(self: AMQPStats): User =
   var stream = self.callStream("users")
-  defer:
+  try:
+    for user in seq[User].items(stream):
+      yield user
+  finally:
     stream.close()
-  for user in seq[User].items(stream):
-    yield user
 
 iterator usersIt*(self: AMQPStatsAsync): User =
   var stream = waitFor(self.callStream("users"))
-  defer:
+  try:
+    for user in seq[User].items(stream):
+      yield user
+  finally:
     stream.close()
-  for user in seq[User].items(stream):
-    yield user
 
 proc usersWithoutPermissions*(self: AMQPStats | AMQPStatsAsync): Future[seq[User]] {.multisync.} =
   ## Retrieves a list of all users.
@@ -478,17 +504,19 @@ proc usersWithoutPermissions*(self: AMQPStats | AMQPStatsAsync): Future[seq[User
 
 iterator usersWithoutPermissionsIt*(self: AMQPStats): User =
   var stream = self.callStream("users/without-permissions")
-  defer:
+  try:
+    for user in seq[User].items(stream):
+      yield user
+  finally:
     stream.close()
-  for user in seq[User].items(stream):
-    yield user
 
 iterator usersWithoutPermissionsIt*(self: AMQPStatsAsync): User =
   var stream = waitFor(self.callStream("users/without-permissions"))
-  defer:
+  try:
+    for user in seq[User].items(stream):
+      yield user
+  finally:
     stream.close()
-  for user in seq[User].items(stream):
-    yield user
 
 proc user*(self: AMQPStats | AMQPStatsAsync, name: string): Future[User] {.multisync.} =
   ## Retrieves details about an individual user.
@@ -528,17 +556,19 @@ proc permissions*(self: AMQPStats | AMQPStatsAsync): Future[seq[Permission]] {.m
 
 iterator permissionsIt*(self: AMQPStats): Permission =
   var stream = self.callStream("permissions")
-  defer:
+  try:
+    for perm in seq[Permission].items(stream):
+      yield perm
+  finally:
     stream.close()
-  for perm in seq[Permission].items(stream):
-    yield perm
 
 iterator permissionsIt*(self: AMQPStatsAsync): Permission =
   var stream = waitFor(self.callStream("permissions"))
-  defer:
+  try:
+    for perm in seq[Permission].items(stream):
+      yield perm
+  finally:
     stream.close()
-  for perm in seq[Permission].items(stream):
-    yield perm
 
 proc permissionsForUser*(self: AMQPStats | AMQPStatsAsync, vhost, name: string): Future[Permission] {.multisync.} =
   ## Retrieves an individual permission of a user and virtual host.
