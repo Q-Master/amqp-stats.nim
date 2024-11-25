@@ -84,7 +84,6 @@ packet QueueBase:
   var vhost*: string
   var durable*: Option[bool]
   var autoDelete* {.asName: "auto_delete".}: Option[bool]
-  var arguments*: Option[Table[string, int]]
 
 packet MessagesCommonInfo:
   var messages*: Option[int]
